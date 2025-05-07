@@ -1,0 +1,9 @@
+.btn-reserve {
+  background-color: #8350e0; /* púrpura suave */
+  color: white;
+  border: none;
+}
+
+.btn-reserve:hover {
+  background-color: #5a32a3;
+}

@@ -1,0 +1,35 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Entornos
+.env
+.env.local
+*.env.*
+env/
+
+# Bytecode
+__pycache__/
+*.py[cod]
+
+# Virtualenv
+venv/
+.env/
+ENV/
+*.egg-info/
+
+# SQLite (si usas para desarrollo)
+db.sqlite3
+
+# Node
+node_modules/
+dist/
+build/
+.cache/
+.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
