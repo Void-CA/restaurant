@@ -34,7 +34,6 @@ class Bill(models.Model):
         CLOSED = 'closed', 'Closed'
 
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
-    waiter = models.ForeignKey(Waiter, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=10, choices=StatusChoices.choices, default=StatusChoices.OPEN)
     created_at = models.DateTimeField(auto_now_add=True)
     closed_at = models.DateTimeField(blank=True, null=True)

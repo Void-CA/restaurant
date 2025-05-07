@@ -8,8 +8,12 @@ router.register(r'order-items', views.OrderItemViewSet)
 router.register(r'orders', views.OrderViewSet)
 router.register(r'products', views.ProductViewSet)
 router.register(r'waiters', views.WaiterViewSet)
+router.register(r'bills', views.BillViewSet)
 
 urlpatterns = [
+    path("products/search/", views.search_products, name="search-products"),
     path('', include(router.urls)),
     path("tables/<int:table_id>/status/", views.update_table_status, name="update-table-status"),
+    
 ]
+  

@@ -1,10 +1,15 @@
 from rest_framework import viewsets
-from .models import Table, OrderItem, Order, Product, Waiter
+from .models import Table, OrderItem, Order, Product, Waiter, Bill
 from . import serializers
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 
+class BillViewSet(viewsets.ModelViewSet):
+    queryset = Bill.objects.all()
+    serializer_class = serializers.BillSerializer
+    
 class TableViewSet(viewsets.ModelViewSet):
     queryset = Table.objects.all()
     serializer_class = serializers.TableSerializer
@@ -40,3 +45,19 @@ def update_table_status(request, table_id):
     table.status = new_status
     table.save()
     return Response({"message": f"Estado actualizado a {new_status}"}, status=status.HTTP_200_OK)
+
+class ProductPagination(PageNumberPagination):
+    page_size = 10  # Número de productos por página
+
+@api_view(['GET'])
+def search_products(request):
+    query = request.query_params.get('query', None)
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        products = Product.objects.all()
+
+    paginator = ProductPagination()
+    result_page = paginator.paginate_queryset(products, request)
+    serializer = serializers.ProductSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
