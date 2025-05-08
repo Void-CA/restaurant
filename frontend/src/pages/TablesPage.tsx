@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import TableList from "../components/TableList";
-import ActionModal from "../components/ActionModal"; // importa tu modal
+import TableList from "../components/tables/TableList";
+import ActionModal from "../components/tables/ActionModal";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Action } from "../types/modals";
 import { FaEye } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
@@ -60,6 +61,7 @@ const TablesPage: React.FC = () => {
     setShowModal(false);
   };
 
+  const navigate = useNavigate();
   const getModalActions = () => {
     if (!selectedTable) return [];
 
@@ -68,17 +70,27 @@ const TablesPage: React.FC = () => {
         {
           label: "Crear Cuenta",
           icon: <BsClipboard2Plus size={modalIconSize} />,
-          variant: "success",
-          onClick: () => {
-            closeModal();
-            window.location.href = `/create-bill/${selectedTable.id}`;
+          variant: "contained",
+          color: "success",
+          onClick: async () => {
+            try {
+              await updateTableStatus(selectedTable.id, "occupied");
+              toast.success(
+                `Cuenta creada para la mesa #${selectedTable.table_number}`
+              );
+              closeModal();
+              navigate(`/orders/new/${selectedTable.id}`);
+            } catch (error) {
+              toast.error("Error al crear la cuenta");
+              console.error(error);
+            }
           },
         },
         {
           label: "Reservar Mesa",
           icon: <BsDashSquare size={modalIconSize} />,
-          variant: "",
-          className: "btn-reserve",
+          variant: "contained",
+          color: "warning",
           onClick: () => handleTableStatusChange("reserved"),
         },
       ],
@@ -86,7 +98,8 @@ const TablesPage: React.FC = () => {
         {
           label: "Agregar Orden",
           icon: <IoIosAddCircleOutline size={modalIconSize} />,
-          variant: "success",
+          variant: "contained",
+          color: "success",
           onClick: () => {
             closeModal();
             window.location.href = `/`;
@@ -95,7 +108,8 @@ const TablesPage: React.FC = () => {
         {
           label: "Ver Cuenta",
           icon: <FaEye size={modalIconSize} />,
-          variant: "primary",
+          variant: "contained",
+          color: "primary",
           onClick: () => {
             closeModal();
             window.location.href = `/`;
@@ -104,24 +118,24 @@ const TablesPage: React.FC = () => {
         {
           label: "Cerrar Cuenta",
           icon: <BsFileRuled size={modalIconSize} />,
-          variant: "danger",
-          onClick: () => {
-            closeModal();
-            window.location.href = `/`;
-          },
+          variant: "contained",
+          color: "error",
+          onClick: () => handleTableStatusChange("available"),
         },
       ],
       reserved: [
         {
           label: "Confirmar Llegada",
           icon: <BsCheckCircle size={modalIconSize} />,
-          variant: "success",
+          variant: "contained",
+          color: "success",
           onClick: () => handleTableStatusChange("occupied"),
         },
         {
           label: "Cancelar Reserva",
           icon: <BsXCircle size={modalIconSize} />,
-          variant: "danger",
+          variant: "contained",
+          color: "error",
           onClick: async () => handleTableStatusChange("available"),
         },
       ],
@@ -129,7 +143,8 @@ const TablesPage: React.FC = () => {
         {
           label: "Marcar como Disponible",
           icon: <BsCheckCircle size={modalIconSize} />,
-          variant: "success",
+          variant: "contained",
+          color: "success",
           onClick: () => handleTableStatusChange("available"),
         },
       ],

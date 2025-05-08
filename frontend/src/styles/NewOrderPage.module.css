@@ -1,0 +1,124 @@
+@media (min-width: 900px) {
+  .newOrderContainer {
+    flex-direction: row; /* En pantallas grandes, en fila */
+    align-items: flex-start;
+  }
+}
+
+.newOrderContainer {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  flex-wrap: wrap;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.productSearchSection {
+  flex: 2;
+  min-width: 300px;
+}
+
+.cartSection {
+  flex: 1;
+  min-width: 400px;
+  background: #f6f7ff;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  height: fit-content;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.productList {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.productItem {
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease;
+}
+
+.productItem:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.productItem h5 {
+  margin: 0 0 0.5rem;
+}
+
+.productItem button {
+  margin-top: 0.5rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.productItem button:hover {
+  background-color: #2980b9;
+}
+
+.cartSection ul {
+  padding-left: 1rem;
+}
+
+.cartSection li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Estilos para los botones de la orden */
+.actionButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.sendButton,
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 48%;
+}
+
+.sendButton {
+  background-color: #2ecc71; /* Verde para enviar */
+  color: white;
+  border: none;
+}
+
+.sendButton:hover {
+  background-color: #27ae60;
+}
+
+.cancelButton {
+  background-color: #e74c3c; /* Rojo para cancelar */
+  color: white;
+  border: none;
+}
+
+.cancelButton:hover {
+  background-color: #c0392b;
+}

@@ -1,18 +1,28 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Layout from "../layouts/Layout";
 import TablesPage from "./pages/TablesPage";
-import NewOrderPage from "./pages/NewOrderPage"; // creala más adelante si aún no existe
-import "./App.css"; // Asegúrate de que la ruta sea correcta
+import NewOrderPage from "./pages/NewOrderPage";
+import "./App.css";
 
 function App() {
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<TablesPage />} />
-          <Route path="/create-bill/:id" element={<NewOrderPage />} />
-        </Routes>
-      </Layout>
+      <ToastContainer position="top-right" autoClose={3000} />
+      <Routes>
+        {/* Ruta con layout */}
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <TablesPage />
+            </Layout>
+          }
+        />
+
+        {/* Ruta sin layout */}
+        <Route path="/orders/new/:id" element={<NewOrderPage />} />
+      </Routes>
     </BrowserRouter>
   );
 }

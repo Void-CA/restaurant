@@ -1,0 +1,72 @@
+/* styles/Cart.module.css */
+
+.cartContainer {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  min-width: 250 px;
+}
+
+.cartContainer h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.cartItem {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px 40px; /* cantidad, nombre, precio, botón */
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.cartItem span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quantity {
+  text-align: center;
+}
+
+.cartItem button {
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.cartItem button:hover {
+  background-color: #c0392b;
+}
+
+.cartItem button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.cartItem button:hover {
+  background-color: #c0392b;
+}
+
+.cartItem .quantity {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.cartContainer p {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+}
