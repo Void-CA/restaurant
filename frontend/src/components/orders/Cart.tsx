@@ -7,7 +7,7 @@ import {
   Box,
   Divider,
 } from "@mui/material";
-import { FaMinus } from "react-icons/fa";
+import { FaMinus, FaTrash } from "react-icons/fa";
 import { CartProps } from "../../types/products";
 
 const Cart: React.FC<CartProps> = ({ items, onRemove }) => {
@@ -47,12 +47,18 @@ const Cart: React.FC<CartProps> = ({ items, onRemove }) => {
               <Typography sx={{ width: "25%" }}>
                 ${cartItem.product.price.toFixed(2)}
               </Typography>
-              <Box sx={{ width: "20%" }}>
+              <Box sx={{ width: "20%", display: "flex" }}>
                 <IconButton
-                  onClick={() => onRemove(cartItem.product.id)}
+                  onClick={() => onRemove(cartItem.product.id, "decrease")}
                   color="error"
                 >
                   <FaMinus />
+                </IconButton>
+                <IconButton
+                  onClick={() => onRemove(cartItem.product.id, "remove")}
+                  color="error"
+                >
+                  <FaTrash />
                 </IconButton>
               </Box>
             </Stack>

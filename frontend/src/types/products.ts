@@ -12,5 +12,5 @@ export type CartItem = {
 
 export type CartProps = {
   items: CartItem[];
-  onRemove: (id: number) => void;
+  onRemove: (id: number, action: "remove" | "decrease") => void;
 };

@@ -11,9 +11,21 @@ router.register(r'waiters', views.WaiterViewSet)
 router.register(r'bills', views.BillViewSet)
 
 urlpatterns = [
-    path("products/search/", views.search_products, name="search-products"),
-    path('', include(router.urls)),
+    # Authentication URLs
+    path('api/login/', views.login_view),
+    path('api/logout/', views.logout_view),
+
+    # Tables URLs
+    path("tables/<int:table_id>/orders/", views.get_table_orders, name="get-table-orders"),
     path("tables/<int:table_id>/status/", views.update_table_status, name="update-table-status"),
     
+    # Waiters URLs
+    path("waiters/by-phone/<str:phone_number>", views.get_waiter_by_phone, name="get-waiter-by-phone"),
+
+    # Products URLs
+    path("products/search/", views.search_products, name="search-products"),
+
+    # ViewSets URLs
+    path('', include(router.urls)),
 ]
   
