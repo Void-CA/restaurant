@@ -38,7 +38,7 @@ function App() {
         {/* Ruta comodín: redirige según estado de login */}
         <Route
           path="*"
-          element={<Navigate to={isLoggedIn ? "/" : "/login"} />}
+          element={<Navigate to={isLoggedIn ? "/tables" : "/login"} />}
         />
       </Routes>
     </BrowserRouter>

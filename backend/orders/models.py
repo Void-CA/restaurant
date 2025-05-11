@@ -23,12 +23,6 @@ class Product(models.Model):
 
 from django.contrib.auth.models import User
 
-class Waiter(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=15, unique=True)
-
-    def __str__(self):
-        return self.user.username
     
 class Bill(models.Model):
     class StatusChoices(models.TextChoices):
@@ -49,7 +43,6 @@ class Order(models.Model):
         COMPLETED = 'completed', 'Completed'
 
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
-    waiter = models.ForeignKey(Waiter, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=StatusChoices.choices, default=StatusChoices.PENDING)
     bill = models.ForeignKey('Bill', on_delete=models.CASCADE, related_name='orders')
     created_at = models.DateTimeField(auto_now_add=True)
