@@ -18,11 +18,6 @@ def login_view(request):
             return JsonResponse({'message': 'Login successful', 'username': user.username})
         else:
             return JsonResponse({'error': 'Invalid credentials'}, status=400)
-    if request.method == 'GET':
-        if request.user.is_authenticated:
-            return JsonResponse({'message': 'Already logged in', 'username': request.user.username})
-        else:
-            return JsonResponse({'error': 'Not authenticated'}, status=401)
 
 @login_required
 def logout_view(request):

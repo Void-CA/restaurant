@@ -1,9 +1,7 @@
 // src/api/waiters.ts
-import axios from "axios";
+import client from "./api_client";
 import { Waiter } from "../types/models";
 
-const BASE_URL = "http://localhost:8000/api";
-
 export const getWaiterByPhone = (phone: string) => {
-  return axios.get<Waiter>(`${BASE_URL}/waiters/by-phone/${phone}`);
+  return client.get<Waiter>(`/waiters/by-phone/${phone}`);
 };
