@@ -10,8 +10,18 @@ import Layout from "../layouts/Layout";
 import LoginPage from "./features/auth/pages/LoginPage";
 import TablesPage from "./features/tables/pages/TablesPage";
 import NewOrderPage from "./features/orders/pages/NewOrderPage";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import config from "./config/appConfig.json"; // Ajusta la ruta si es necesario
 
 import "./App.css";
+
+const theme = createTheme({
+  palette: {
+    mode: config.theme.mode, // "light" o "dark"
+    primary: { main: config.theme.primary_color },
+    secondary: { main: config.theme.secondary_color },
+  },
+});
 
 function App() {
   const dispatch = useDispatch();
@@ -36,35 +46,37 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <ToastContainer position="top-right" autoClose={3000} />
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <ToastContainer position="top-right" autoClose={3000} />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
 
-        <Route
-          path="/tables"
-          element={
-            localStorage.getItem("access") ? (
-              <Layout>
-                <TablesPage />
-              </Layout>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
+          <Route
+            path="/tables"
+            element={
+              localStorage.getItem("access") ? (
+                <Layout>
+                  <TablesPage />
+                </Layout>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
 
-        <Route
-          path="/orders/new/:id"
-          element={isLoggedIn ? <NewOrderPage /> : <Navigate to="/login" />}
-        />
+          <Route
+            path="/orders/new/:id"
+            element={isLoggedIn ? <NewOrderPage /> : <Navigate to="/login" />}
+          />
 
-        <Route
-          path="*"
-          element={<Navigate to={isLoggedIn ? "/tables" : "/login"} />}
-        />
-      </Routes>
-    </BrowserRouter>
+          <Route
+            path="*"
+            element={<Navigate to={isLoggedIn ? "/tables" : "/login"} />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
