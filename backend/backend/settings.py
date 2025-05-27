@@ -140,6 +140,7 @@ SESSION_COOKIE_SAMESITE = 'Lax'  # Asegura que la cookie solo se envíe desde el
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # necesaria para el admin
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',

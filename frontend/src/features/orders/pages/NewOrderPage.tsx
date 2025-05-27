@@ -1,15 +1,23 @@
-import React, { useState } from "react";
-import { createOrder } from "../services/orders"; // Asegúrate de que la ruta sea correcta
+import React, { useState, useEffect } from "react";
+import { createOrder } from "../types/orders"; // Asegúrate de que la ruta sea correcta
 import ProductSearch from "../components/ProductSearch";
 import Cart from "../components/Cart";
 import ConfirmModal from "../components/ConfirmModal";
 import styles from "../styles/NewOrderPage.module.css";
 import { Product, CartItem } from "../types/products"; // Asegúrate de que la ruta sea correcta
 import { useNavigate } from "react-router-dom";
+import { productsService } from "../services/productsService"; // Asegúrate de que la ruta sea correcta
+
 const NewOrderPage: React.FC = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    // Supón que tienes un servicio productsService.getProducts()
+    productsService.getProducts().then(setProducts).catch(console.error);
+  }, []);
 
   // Agregar al carrito con control de cantidad
   const handleAddToCart = (product: Product) => {
@@ -89,7 +97,7 @@ const NewOrderPage: React.FC = () => {
     <div className={styles.newOrderContainer}>
       <div className={styles.productSearchSection}>
         <h1>Crear Orden</h1>
-        <ProductSearch onAddToCart={handleAddToCart} />
+        <ProductSearch products={products} onAddToCart={handleAddToCart} />
       </div>
       <div className={styles.cartSection}>
         <Cart items={cartItems} onRemove={handleRemoveFromCart} />

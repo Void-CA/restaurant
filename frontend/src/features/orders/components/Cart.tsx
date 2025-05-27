@@ -1,5 +1,5 @@
-import React from 'react';
-import { CartItem } from '../types/products';
+import React from "react";
+import { CartItem } from "../types/products";
 
 interface CartProps {
   items: CartItem[];
@@ -7,7 +7,10 @@ interface CartProps {
 }
 
 const Cart: React.FC<CartProps> = ({ items, onRemove }) => {
-  const total = items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+  const total = items.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
 
   return (
     <div>
@@ -17,8 +20,12 @@ const Cart: React.FC<CartProps> = ({ items, onRemove }) => {
           <span>{item.product.name}</span>
           <span>Cantidad: {item.quantity}</span>
           <span>${item.product.price * item.quantity}</span>
-          <button onClick={() => onRemove(item.product.id, "decrease")}>-</button>
-          <button onClick={() => onRemove(item.product.id, "remove")}>Eliminar</button>
+          <button onClick={() => onRemove(item.product.id, "decrease")}>
+            -
+          </button>
+          <button onClick={() => onRemove(item.product.id, "remove")}>
+            Eliminar
+          </button>
         </div>
       ))}
       <div>
@@ -28,4 +35,4 @@ const Cart: React.FC<CartProps> = ({ items, onRemove }) => {
   );
 };
 
-export default Cart; 
+export default Cart;
