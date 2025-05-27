@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { setAuthenticated, setLoggedOut } from "./redux/authSlice";
+import {
+  setAuthenticated,
+  setLoggedOut,
+} from "./features/auth/redux/authSlice";
 import Layout from "../layouts/Layout";
-import TablesPage from "./pages/TablesPage";
-import NewOrderPage from "./pages/NewOrderPage";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./features/auth/pages/LoginPage";
+import TablesPage from "./features/tables/pages/TablesPage";
+import NewOrderPage from "./features/orders/pages/NewOrderPage";
 
 import "./App.css";
 

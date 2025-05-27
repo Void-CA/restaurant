@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAuthenticated } from "../features/auth/redux/authSlice";
-import { login as apiLogin } from "../api/auth";
+import { setAuthenticated } from "../redux/authSlice";
+import { login as apiLogin } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 

@@ -1,0 +1,41 @@
+[33mcommit b083783a2c99af9b178dd5e859cfefe1bea24586[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/login[m[33m)[m
+Author: Void-CA <castilloari282@gmail.com>
+Date:   Sat May 24 23:48:35 2025 -0600
+
+    Migrating to JWT
+
+[33mcommit fe4c6f393b83e63a88cf8c80a61ed2ff19e9cee4[m
+Author: Void-CA <castilloari282@gmail.com>
+Date:   Sun May 11 15:49:04 2025 -0600
+
+    authentication app and customUser model created
+
+[33mcommit 6732e8554a36783d7473f2548f801759026ddfd1[m[33m ([m[1;31morigin/feature/create-new-order[m[33m, [m[1;32mfeature/create-new-order[m[33m)[m
+Author: Void-CA <castilloari282@gmail.com>
+Date:   Fri May 9 00:31:19 2025 -0600
+
+    working on django auth
+
+[33mcommit 3caf85c807599ca9d8d1505e21518ec5da5c48be[m
+Author: Void-CA <castilloari282@gmail.com>
+Date:   Thu May 8 16:31:51 2025 -0600
+
+    using material ui
+
+[33mcommit 85cfd4efc53dbf1b48079437d3f7d9b63294908f[m
+Author: Void-CA <castilloari282@gmail.com>
+Date:   Wed May 7 14:37:04 2025 -0600
+
+    first version of creating orders
+
+[33mcommit 8ff84a11241d75c1a4d427b432acaa794d9de1e1[m[33m ([m[1;31morigin/test[m[33m, [m[1;31morigin/release[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/hotfix[m[33m, [m[1;31morigin/features[m[33m, [m[1;31morigin/docs[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/chore[m[33m, [m[1;31morigin/bugfix[m[33m, [m[1;32mtest[m[33m, [m[1;32mrelease[m[33m, [m[1;32mmain[m[33m, [m[1;32mhotfix[m[33m, [m[1;32mfeatures[m[33m, [m[1;32mdocs[m[33m, [m[1;32mdevelop[m[33m, [m[1;32mchore[m[33m, [m[1;32mbugfix[m[33m)[m
+Author: Void-CA <castilloari282@gmail.com>
+Date:   Wed May 7 00:01:55 2025 -0600
+
+    Restaurant project starting tables management app
+
+[33mcommit de118508d47da1bbd16928d19f5c1f7cb064f5a0[m
+Author: Void-CA <castilloari282@gmail.com>
+Date:   Tue May 6 23:58:36 2025 -0600
+
+    first commit

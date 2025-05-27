@@ -1,7 +1,7 @@
 import React from "react";
 import { MdTableRestaurant } from "react-icons/md";
 import { Card, CardContent, Typography, Box, Chip } from "@mui/material";
-import { Table } from "../../features/tables/types/tables"; // Asegúrate de que la ruta sea correcta
+import { Table } from "../types/tables"; // Asegúrate de que la ruta sea correcta
 
 type Props = {
   table: Table;
