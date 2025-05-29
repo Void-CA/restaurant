@@ -4,7 +4,8 @@ import { setAuthenticated } from "../redux/authSlice";
 import { login as apiLogin } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import Container from "@mui/material/Container";
+import { Box, useMediaQuery } from "@mui/material";
+import config from "../../../config/appConfig";
 import LoginForm from "../components/LoginForm";
 
 const LoginPage = () => {
@@ -13,6 +14,8 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isTabletOrLarger = useMediaQuery("(min-width:600px)");
+  const theme = config.theme;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,13 +26,10 @@ const LoginPage = () => {
       localStorage.setItem("access", access);
       localStorage.setItem("refresh", refresh);
 
-      // Decodifica el token para obtener el rol
       const decoded: any = jwtDecode(access);
       const role = decoded.role;
-
       dispatch(setAuthenticated(true));
 
-      // Redirige según el rol
       if (role === "admin") {
         navigate("/admin");
       } else if (role === "waiter") {
@@ -38,23 +38,42 @@ const LoginPage = () => {
         navigate("/login");
       }
     } catch (error) {
-      alert("Error de login");
+      alert("Usuario o contraseña inválidos");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Container maxWidth="sm">
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: isTabletOrLarger ? "row" : "column",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#111",
+        backgroundImage: theme.background_image
+          ? `url(${theme.background_image})`
+          : undefined,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        p: 2,
+      }}
+    >
       <LoginForm
         username={username}
         password={password}
+        loading={loading}
         onUsernameChange={(e) => setUsername(e.target.value)}
         onPasswordChange={(e) => setPassword(e.target.value)}
         onSubmit={handleLogin}
-        loading={loading}
+        loginMessage={config.login_message}
+        logo={config.theme.logo}
+        theme={theme}
+        restaurantName={config.restaurant_name}
       />
-    </Container>
+    </Box>
   );
 };
 

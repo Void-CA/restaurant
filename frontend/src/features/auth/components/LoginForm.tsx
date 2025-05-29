@@ -1,138 +1,218 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import config from "../../../config/appConfig";
-import { jwtDecode } from "jwt-decode";
-import { login as apiLogin } from "../services/auth";
-import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Stack,
+  useMediaQuery,
+  Divider,
+  InputAdornment,
+} from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 interface LoginFormProps {
   username: string;
   password: string;
+  loading: boolean;
   onUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
-  loading?: boolean;
+  loginMessage: string;
+  logo: string;
+  theme: any;
+  restaurantName: string;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({
   username,
   password,
+  loading,
   onUsernameChange,
   onPasswordChange,
   onSubmit,
-  loading = false,
-}) => (
-  <Box
-    component="form"
-    onSubmit={onSubmit}
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      gap: 2,
-      width: 320,
-      mx: "auto",
-      mt: 8,
-      p: 4,
-      borderRadius: 2,
-      boxShadow: 3,
-      bgcolor: "background.paper",
-    }}
-  >
-    <Typography variant="h5" align="center" gutterBottom>
-      Iniciar Sesión
-    </Typography>
-    <TextField
-      label="Usuario"
-      value={username}
-      onChange={onUsernameChange}
-      autoFocus
-      required
-    />
-    <TextField
-      label="Contraseña"
-      type="password"
-      value={password}
-      onChange={onPasswordChange}
-      required
-    />
-    <Button
-      type="submit"
-      variant="contained"
-      color="primary"
-      disabled={loading}
-      sx={{ mt: 2 }}
-    >
-      {loading ? "Ingresando..." : "Ingresar"}
-    </Button>
-  </Box>
-);
-const LoginPage = () => {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
-  const navigate = useNavigate();
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await apiLogin(username, password);
-      const { access, refresh } = response.data;
-      localStorage.setItem("access", access);
-      localStorage.setItem("refresh", refresh);
-
-      // Decodifica el token para obtener el rol
-      const decoded: any = jwtDecode(access);
-      const role = decoded.role; // Asegúrate que tu backend lo incluya
-
-      // Redirige según el rol
-      if (role === "admin") {
-        navigate("/admin");
-      } else if (role === "waiter") {
-        navigate("/tables");
-      } else {
-        navigate("/login");
-      }
-    } catch (error) {
-      alert("Error de login");
-    } finally {
-      setLoading(false);
-    }
-  };
+  loginMessage,
+  logo,
+  theme,
+  restaurantName,
+}) => {
+  const isLarge = useMediaQuery("(min-width:900px)");
 
   return (
-    <Container maxWidth="sm">
-      <img
-        src={config.theme.logo}
-        alt={config.restaurant_name}
-        style={{
-          width: 120,
-          margin: "0 auto",
-          display: "block",
-        }}
-      />
-      <h2
-        style={{
+    <Box
+      component="form"
+      onSubmit={onSubmit}
+      sx={{
+        width: isLarge ? 1000 : 420,
+        maxWidth: "98vw",
+        backgroundColor: "rgba(56, 56, 56, 0.85)",
+        border: `3px solid ${theme.primary_color || "#FFD600"}`,
+        p: isLarge ? 8 : 4,
+        borderRadius: 6,
+        boxShadow: 16,
+        display: "flex",
+        flexDirection: isLarge ? "row" : "column",
+        alignItems: "center",
+        gap: isLarge ? 8 : 3,
+        color: "#fff",
+      }}
+    >
+      {/* Logo y mensaje */}
+      <Box
+        sx={{
+          flex: 1,
           textAlign: "center",
-          color: config.theme.primary_color,
+          mb: isLarge ? 0 : 1,
         }}
       >
-        {config.login_message}
-      </h2>
-      <LoginForm
-        username={username}
-        password={password}
-        onUsernameChange={(e) => setUsername(e.target.value)}
-        onPasswordChange={(e) => setPassword(e.target.value)}
-        onSubmit={handleLogin}
-        loading={loading}
-      />
-    </Container>
+        <img
+          src={logo}
+          alt={restaurantName}
+          style={{
+            width: isLarge ? 400 : 250,
+            marginBottom: isLarge ? 24 : 0,
+            filter: "drop-shadow(0 0 10px #FFD600)",
+          }}
+        />
+      </Box>
+      {/* Formulario */}
+      <Stack spacing={4} sx={{ flex: 1, minWidth: isLarge ? 340 : "auto" }}>
+        <TextField
+          label={
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <PersonIcon
+                sx={{
+                  fontSize: isLarge ? 22 : 18,
+                  mr: 0.5,
+                  color: theme.palette?.highlight?.main || theme.highlight_color || "#fffed6",
+                }}
+              />
+              Usuario
+            </span>
+          }
+          variant="outlined"
+          fullWidth
+          value={username}
+          onChange={onUsernameChange}
+          margin="normal"
+          required
+          size={isLarge ? "medium" : "small"}
+          InputProps={{
+            sx: {
+              fontSize: isLarge ? "1.5rem" : "1.1rem",
+              color: "#fffed6",
+              backgroundColor: "rgba(33,33,33,0.8)",
+              borderRadius: 5,
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              fontSize: isLarge ? "1.2rem" : "1.1rem",
+              color: theme.palette?.highlight?.main || theme.highlight_color || "#fffed6",
+              "&.Mui-focused": {
+                color: theme.palette?.highlight?.main || theme.highlight_color || "#fffed6",
+              },
+              "&.MuiInputLabel-shrink": {
+                color: theme.palette?.highlight?.main || theme.highlight_color || "#fffed6",
+              },
+            },
+            required: false,
+            shrink: undefined,
+          }}
+          FormHelperTextProps={{
+            required: false,
+          }}
+          inputProps={{ "aria-required": false }}
+        />
+        <TextField
+          label={
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <LockOutlinedIcon
+                sx={{
+                  fontSize: isLarge ? 22 : 18,
+                  mr: 0.5,
+                  color: theme.palette?.highlight?.main || theme.highlight_color || "#fffed6",
+                }}
+              />
+              Contraseña
+            </span>
+          }
+          variant="outlined"
+          type="password"
+          fullWidth
+          value={password}
+          onChange={onPasswordChange}
+          margin="normal"
+          required
+          size={isLarge ? "medium" : "small"}
+          InputProps={{
+            sx: {
+              fontSize: isLarge ? "1.5rem" : "1.1rem",
+              color: "#fffed6",
+              backgroundColor: "rgba(33,33,33,0.8)",
+              borderRadius: 5,
+            },
+          }}
+          InputLabelProps={{
+            sx: {
+              fontSize: isLarge ? "1.2rem" : "1.1rem",
+              color: theme.palette?.highlight?.main || theme.highlight_color || "#fffed6",
+              "&.Mui-focused": {
+                color: theme.palette?.highlight?.main || theme.highlight_color || "#fffed6",
+              },
+              "&.MuiInputLabel-shrink": {
+                color: theme.palette?.highlight?.main || theme.highlight_color || "#fffed6",
+              },
+            },
+            required: false,
+            shrink: undefined,
+          }}
+          FormHelperTextProps={{
+            required: false,
+          }}
+          inputProps={{ "aria-required": false }}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          disabled={loading}
+          color="primary"
+          sx={{
+            mt: 2,
+            py: isLarge ? 2.5 : 2,
+            fontSize: isLarge ? "1.4rem" : "1.1rem",
+            fontWeight: 700,
+            letterSpacing: 1,
+            borderRadius: 2,
+            boxShadow: "0 4px 24pxrgba(255, 232, 114, 0.83)",
+            transition: "background 0.2s",
+            backgroundColor: "#FFD600",
+            color: "#212121",
+            ":hover": {
+              backgroundColor: "#b9ac0a",
+              color: "#000",
+            },
+          }}
+        >
+          {loading ? "Ingresando..." : "Ingresar"}
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 
-export default LoginPage;
+export default LoginForm;

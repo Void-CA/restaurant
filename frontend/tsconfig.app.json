@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "layouts/Layout.tsx"]
+  "include": ["src", "src/layouts/Layout.tsx"]
 }

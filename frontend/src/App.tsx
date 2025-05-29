@@ -6,22 +6,14 @@ import {
   setAuthenticated,
   setLoggedOut,
 } from "./features/auth/redux/authSlice";
-import Layout from "../layouts/Layout";
+import Layout from "./layouts/Layout";
 import LoginPage from "./features/auth/pages/LoginPage";
 import TablesPage from "./features/tables/pages/TablesPage";
 import NewOrderPage from "./features/orders/pages/NewOrderPage";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import config from "./config/appConfig.json"; // Ajusta la ruta si es necesario
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./app/theme"; // Importa el theme separado
 
 import "./App.css";
-
-const theme = createTheme({
-  palette: {
-    mode: config.theme.mode, // "light" o "dark"
-    primary: { main: config.theme.primary_color },
-    secondary: { main: config.theme.secondary_color },
-  },
-});
 
 function App() {
   const dispatch = useDispatch();
