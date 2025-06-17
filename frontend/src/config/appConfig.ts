@@ -4,7 +4,7 @@ export default {
   theme: {
     primary_color: "#212121",
     secondary_color: "#FFD600",
-    background: "#eaebe7",
+    background: "#fcfcfc",
     background_image: "/assets/bg.png",
     logo: "/assets/logo.png",
     mode: "light",

@@ -77,7 +77,7 @@ const ActionModal: React.FC<Props> = ({
       <DialogActions>
         <Button
           onClick={onClose}
-          variant="outlined"
+          variant="contained"
           color="secondary"
           fullWidth
           sx={{ py: 2, fontSize: "1.1rem", textTransform: "none" }}

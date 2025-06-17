@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { createOrder } from "../types/orders"; // Asegúrate de que la ruta sea correcta
 import ProductSearch from "../components/ProductSearch";
 import Cart from "../components/Cart";
 import ConfirmModal from "../components/ConfirmModal";
 import styles from "../styles/NewOrderPage.module.css";
 import { Product, CartItem } from "../types/products"; // Asegúrate de que la ruta sea correcta
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { productsService } from "../services/productsService"; // Asegúrate de que la ruta sea correcta
+import { ordersService } from "../services/ordersService";
+import { OrderPayload } from "../types/orders";
+import { getOrCreateOpenBill } from "../services/billsUtils";
 
 const NewOrderPage: React.FC = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -67,16 +70,32 @@ const NewOrderPage: React.FC = () => {
     });
   };
   const handleSendToKitchen = async () => {
+    if (!id || isNaN(Number(id)) || Number(id) <= 0) {
+      alert("ID de mesa inválido. No se puede crear la orden.");
+      return;
+    }
     try {
-      const orderPayload = {
+      const bill = await getOrCreateOpenBill(Number(id));
+
+      if (!bill) {
+        alert("No se pudo crear o encontrar una factura abierta.");
+        return;
+      }
+
+      const orderPayload: OrderPayload = {
+        bill: bill.id, // Asignar la factura creada
+        table: Number(id),
         items: cartItems.map((item) => ({
-          productId: item.product.id,
+          product: item.product.id,
           quantity: item.quantity,
         })),
-        status: "enviada",
+        status: "pending",
       };
 
-      await createOrder(orderPayload);
+      console.log("Orden a enviar:", orderPayload);
+      await ordersService.createOrder(orderPayload);
+
+      console.log("Respuesta de la factura:", bill);
       setCartItems([]);
       navigate("/");
     } catch (error) {
@@ -110,6 +129,7 @@ const NewOrderPage: React.FC = () => {
           </button>
           {showConfirm && (
             <ConfirmModal
+              open={showConfirm}
               message="Confirmar orden antes de enviar a cocina"
               items={cartItems}
               onConfirm={handleSendToKitchen}

@@ -16,7 +16,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True, read_only=True)
+    items = OrderItemSerializer(many=True)
+
+    class Meta:
+        model = models.Order
+        fields = '__all__'
 
     def create(self, validated_data):
         items_data = validated_data.pop('items')
@@ -24,9 +28,6 @@ class OrderSerializer(serializers.ModelSerializer):
         for item in items_data:
             models.OrderItem.objects.create(order=order, **item)
         return order
-    class Meta:
-        model = models.Order
-        fields = '__all__'
 
 class ProductSerializer(serializers.ModelSerializer):
     price = serializers.FloatField()
